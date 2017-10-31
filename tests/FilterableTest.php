@@ -3,6 +3,7 @@
 namespace Achillesp\Filterable\Test;
 
 use Illuminate\Http\Request;
+
 /**
  * @coversFilterable
  * @coversFilters
@@ -10,7 +11,6 @@ use Illuminate\Http\Request;
  */
 class FilterableTest extends TestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -85,7 +85,7 @@ class FilterableTest extends TestCase
 
         $posts = Post::filter($filters)->get();
 
-        $this->assertCount(Post::where('is_published',true)->count(), $posts);
+        $this->assertCount(Post::where('is_published', true)->count(), $posts);
     }
 
     /** @test */
@@ -96,7 +96,5 @@ class FilterableTest extends TestCase
         $posts = Post::filter($filters)->get();
 
         $this->assertCount(Post::all()->count(), $posts);
-
     }
-
 }

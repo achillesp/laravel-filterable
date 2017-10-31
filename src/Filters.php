@@ -2,8 +2,6 @@
 
 namespace Achillesp\Filterable;
 
-use Illuminate\Http\Request;
-
 abstract class Filters
 {
     protected $request;
@@ -18,7 +16,7 @@ abstract class Filters
      */
     public function __construct($query)
     {
-        if (is_object($query) && get_class($query) === 'Illuminate\Http\Request') {
+        if (is_object($query) && 'Illuminate\Http\Request' === get_class($query)) {
             $this->request = $query;
         } elseif (is_array($query)) {
             $this->query = $query;
