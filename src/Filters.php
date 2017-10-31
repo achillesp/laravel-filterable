@@ -7,17 +7,22 @@ use Illuminate\Http\Request;
 abstract class Filters
 {
     protected $request;
+    protected $query;
     protected $builder;
     protected $filters = [];
 
     /**
      * Filters constructor.
      *
-     * @param Request $request
+     * @param $query
      */
-    public function __construct(Request $request)
+    public function __construct($query)
     {
-        $this->request = $request;
+        if (is_object($query) && get_class($query) === 'Illuminate\Http\Request') {
+            $this->request = $query;
+        } elseif (is_array($query)) {
+            $this->query = $query;
+        }
     }
 
     /**
@@ -47,23 +52,14 @@ abstract class Filters
      */
     public function getFilters()
     {
-        return $this->request->only($this->filters);
-    }
+        if (!empty($this->request)) {
+            return $this->request->only($this->filters);
+        }
 
+        if (!empty($this->query)) {
+            return array_intersect_key($this->query, array_flip($this->filters));
+        }
 
-
-    public function filterString($filter, $value)
-    {
-        return $this->builder->where($filter, 'like', "%$value%");
-    }
-
-    public function filterInteger($filter, $value)
-    {
-        return $this->builder->where($filter, $value);
-    }
-
-    public function filterBoolean($filter, $value)
-    {
-        return $this->builder->where($filter, $value);
+        return [];
     }
 }

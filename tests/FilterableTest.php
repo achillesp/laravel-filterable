@@ -78,4 +78,25 @@ class FilterableTest extends TestCase
         $this->assertCount(Post::all()->count(), $posts);
     }
 
+    /** @test */
+    public function it_filters_based_on_a_given_array()
+    {
+        $filters = new PostFilters(['published' => true]);
+
+        $posts = Post::filter($filters)->get();
+
+        $this->assertCount(Post::where('is_published',true)->count(), $posts);
+    }
+
+    /** @test */
+    public function it_filters_nothing_if_not_given_an_array_or_request()
+    {
+        $filters = new PostFilters('live');
+
+        $posts = Post::filter($filters)->get();
+
+        $this->assertCount(Post::all()->count(), $posts);
+
+    }
+
 }
