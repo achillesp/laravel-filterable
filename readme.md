@@ -7,7 +7,7 @@ This Laravel package provides an abstraction for filtering Eloquent Models.
 From the command line, run:
 
 ```
-composer require achillesp/filterable
+composer require achillesp/laravel-filterable
 ```
 
 ## Usage
