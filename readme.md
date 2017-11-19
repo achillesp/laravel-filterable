@@ -1,6 +1,6 @@
 # Filter Laravel Models
 
-This Laravel package provides an abstraction for filtering Eloquent Models.
+This Laravel package provides an abstraction for filtering Eloquent Models based on a request.
 
 ## Installation
 
@@ -12,7 +12,7 @@ composer require achillesp/laravel-filterable
 
 ## Usage
 
-To filter a model, you need to use the trait Filterable.
+To be able to filter a model, you need to use the trait Filterable.
 
 ```php
 use Achillesp\Filterable\Filterable;
@@ -23,9 +23,10 @@ class Post extends Eloquent
 }
 ```
 
-The filters are then defined in their own class, which extends the class Achillesp\Filterable\Filters.
-In this class you need to provide a `$filters` array which contains the names of the filters you need to use.
-You then declare a function for each of those filters, that queries the model accordingly.
+The filters are defined in their own class, which extends the class Achillesp\Filterable\Filters.
+In this class you need to provide a `$filters` array which contains the names of the filters you'd like to use.
+You then declare a method for each of those filters, that queries the model accordingly.
+You could use the same filter class for more than one model, or have a different filter class for each model you want to filter.
 
 ```php
 use Achillesp\Filterable\Filters;
@@ -46,7 +47,7 @@ class PostFilters extends Filters
 }
 ```
 
-You can then filter the model either directly from a request or by giving an array.
+You can then filter the model either directly from a request or by giving an array of key-value pais.
 
 To filter based on a request, for example in a controller:
 
@@ -66,4 +67,6 @@ $filters = new PostFilters(['category' => 1, 'published' => true]);
 $posts = Post::filter($filters)->get();
 ```
 
+## License
 
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
